@@ -1,10 +1,7 @@
 package Day3_Ass;
 
-public class Qus5 {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+public interface TimeClient {
+    public void setTime(int hour, int minute, int second);
+    public void setDate(int day, int month, int year);
+    public void setDateAndTime(int day, int month, int year,int hour, int minute, int second);
 }
