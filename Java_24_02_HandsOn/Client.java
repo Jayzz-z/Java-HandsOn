@@ -1,59 +1,56 @@
 package Java_24_02_HandsOn;
 
-package Java_24_02_HandsOn;
+import java.io.*;  
+import java.net.Socket;  
+import java.util.Scanner;
+public class Client {
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-public class Serverr {
-
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-   
-		      Socket socket ;  
-		      InputStreamReader inputStreamReader ;  
-		      OutputStreamWriter outputStreamWriter ;  
-		      BufferedReader bufferedReader ;  
-		      BufferedWriter bufferedWriter ;  
-		      ServerSocket serversocket ;  
-		  
-		      serversocket = new ServerSocket(5000);  
-		  
-		      while (true) {  
-		          try {  
-		         
-		              socket = serversocket.accept();  
-		      
-		              inputStreamReader = new InputStreamReader(socket.getInputStream());  
-		              outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());  
-		              bufferedReader = new BufferedReader(inputStreamReader);  
-		              bufferedWriter = new BufferedWriter(outputStreamWriter);  
 
-		              while (true){  
-		                  String msgFromClient = bufferedReader.readLine();  
-		                  System.out.println("Client: " + msgFromClient);   
-		                  bufferedWriter.write(" MSG Received"); 
-		                  bufferedWriter.newLine();  
-		                  bufferedWriter.flush(); 
+		
+		 Socket socket = null;  
+	        InputStreamReader inputStreamReader = null;  
+	        OutputStreamWriter outputStreamWriter = null;  
+	        BufferedReader bufferedReader = null;  
+	        BufferedWriter bufferedWriter = null;  
+	        
+	        try {  
+	            socket = new Socket("localhost", 5000);  
+	            inputStreamReader = new InputStreamReader(socket.getInputStream());  
+	            outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());  
+	            bufferedReader = new BufferedReader(inputStreamReader);  
+	            bufferedWriter = new BufferedWriter(outputStreamWriter);  
 
-		                  if (msgFromClient.equalsIgnoreCase("BYE"))  
-		                  break;  
-		              }  
-		              socket.close();  
-		              inputStreamReader.close();  
-		              outputStreamWriter.close();  
-		              bufferedReader.close();  
-		              bufferedWriter.close();  
-
-		          } catch (IOException e) {  
-		              e.printStackTrace();  
-		          }  
-		        } 
+	            Scanner scanner = new Scanner(System.in);  
+	            while (true){  
+	                String msgToSend = scanner.nextLine();  
+	                bufferedWriter.write(msgToSend);  
+	                bufferedWriter.newLine();  
+	                bufferedWriter.flush();  
+	                
+	                System.out.println("Server: " + bufferedReader.readLine());  //printing the server message
+	                
+	                if (msgToSend.equalsIgnoreCase("BYE"))  
+	                    break;  
+	            }  
+	        } catch (IOException e) {  
+	            e.printStackTrace();  
+	        } finally {  
+	             try {  
+	                  if (socket != null)  
+	                  socket.close();  
+	                  if (inputStreamReader != null)  
+	                    inputStreamReader.close();  
+	                  if (outputStreamWriter != null)  
+	                  outputStreamWriter.close();  
+	                  if (bufferedReader != null)  
+	                  bufferedReader.close();  
+	                  if (bufferedWriter != null)  
+	                  bufferedWriter.close();  
+	             } catch (IOException e) {  
+	            e.printStackTrace();  
+	          }  
+	       }
+	       }  
 	}
-
-}
