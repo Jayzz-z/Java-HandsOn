@@ -96,6 +96,7 @@ public class Customer {
 					pr1.setInt(2, account_no);
 					pr1.executeUpdate();
 					System.out.println("Deposited Successfully !!");
+					System.out.println("Available Balance In Your Account : "+balance +" INR\n\n");
 					if(Head==null) {
 						Head=new Transaction();
 						Tail=Head;
@@ -154,6 +155,7 @@ public class Customer {
 			con.close();
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Customer Not Registered!! Customer Data Not Found In The Bank's Record");
 			e.printStackTrace();
 			}
 		}
